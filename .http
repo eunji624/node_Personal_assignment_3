@@ -1,0 +1,99 @@
+## 상품 작성하기
+
+POST http://localhost:3008/api/product HTTP/1.1
+Content-Type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEsImlhdCI6MTcwMDQ1MjUwMiwiZXhwIjoxNzAwNDk1NzAyfQ.5uSAXFyA8NoxjoJjiJ_JjkhYdDRzTQ8vgWaZedOtTas
+
+{ 
+  "product_name": "꾸ㅂㅂ이ㅈ칩",
+  "price": "3000",
+  "comment": "ddd"
+}
+
+## 포크를 위한 수정.
+
+
+#
+
+### 상품 리스트 보여주기
+GET http://localhost:3008/api/products?sort=desc HTTP/1.1
+Content-Type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEsImlhdCI6MTcwMDQ1MjUwMiwiZXhwIjoxNzAwNDk1NzAyfQ.5uSAXFyA8NoxjoJjiJ_JjkhYdDRzTQ8vgWaZedOtTas
+
+
+
+
+
+#
+
+### 상품 상세 보여주기
+GET http://localhost:3008/api/product/detail/1 HTTP/1.1
+Content-Type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEsImlhdCI6MTcwMDQ1MjUwMiwiZXhwIjoxNzAwNDk1NzAyfQ.5uSAXFyA8NoxjoJjiJ_JjkhYdDRzTQ8vgWaZedOtTas
+
+
+
+#
+
+### 상품 수정하기
+PATCH  http://localhost:3008/api/product/5 HTTP/1.1
+Content-Type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzAwMzc4MDUyLCJleHAiOjE3MDA0MjEyNTJ9.yYPQjNY_HVNnlG1fc1_XeVT71XyB5i3XeZA6qCoLedo
+
+{ 
+  "product_name": "꾸이꾸이 후드집업",
+  "price": "200000",
+  "comment": "꾸이꾸이 후드에요. 숏기장이고, 힙해요",
+  "status": "SOLD_OUT"
+}
+
+
+
+
+
+#
+
+### 상품 삭제하기
+DELETE http://localhost:3008/api/product/5 HTTP/1.1
+Content-Type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzAwMzgwMjA1LCJleHAiOjE3MDA0MjM0MDV9.JloJDAto72hgAY7wS1fUi1sPJJGg4v9w6SwxlqoQA9Y
+
+
+
+
+
+
+
+
+#
+
+### 회원가입 
+POST http://localhost:3008/api/register HTTP/1.1
+Content-Type: application/json
+# authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzAwMzIwODAwLCJleHAiOjE3MDAzNjQwMDB9.Xb-3RsVmukmhHqGu791Tqzzd8N2r0cWb9hntaqcFIBU
+
+{
+  "nick_name" : "방1어wss회",
+  "email": "dhdh@naver.com",
+  "password" : "123123",
+  "passwordRe" : "123123",
+  "birth_date" : "1995-06-24",
+  "address": "dd"
+}
+
+
+
+
+
+# 
+
+### 회원 로그인
+POST http://localhost:3008/api/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "allrktkwww22w@l1aver.com",
+  "password" : "123123"
+}
+
+
