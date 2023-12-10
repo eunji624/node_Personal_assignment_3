@@ -1,12 +1,15 @@
 import axios from 'axios';
+import redis from 'redis';
 
+const redisClient = redis.createClient();
+redisClient.connect();
 export class UsersService {
-	constructor(usersRepository, jwt, bcrypt) {
+	constructor(usersRepository, bcrypt) {
 		this.usersRepository = usersRepository;
-		this.jwt = jwt;
 		this.bcrypt = bcrypt;
 	}
 
+	//회원가입
 	createUser = async (nickname, email, password) => {
 		const hashPassword = this.bcrypt.hashSync(password, 10);
 		const user = await this.usersRepository.createUser(nickname, email, hashPassword);
@@ -20,26 +23,6 @@ export class UsersService {
 		};
 	};
 
-	localCallbackFunction = async (err, user, info) => {
-		if (err) {
-			console.log('err', err);
-			return next(err);
-		}
-		if (!user) {
-			return res.status(401).json({ message: info.message });
-		}
-
-		console.log('로컬스토리티지 라우터 user', user);
-		return req.login(user, (loginError) => {
-			if (loginError) {
-				console.log(loginError);
-				return next(loginError);
-			}
-			res.cookie('accessToken', user.accessToken);
-			return res.status(200).json({ message: info.message });
-		});
-	};
-
 	//회원 로그아웃
 	updateUser = async (userId) => {
 		const updateUser = await this.usersRepository.updateUser(userId);
@@ -48,7 +31,6 @@ export class UsersService {
 
 	//회원 탈퇴(로컬)
 	deleteUser = async (userId) => {
-		console.log('서비스단', userId);
 		const deleteUser = await this.usersRepository.deleteUser(userId);
 		return { userId: deleteUser };
 	};
@@ -66,5 +48,10 @@ export class UsersService {
 			}
 		);
 		return token;
+	};
+
+	//리프레쉬 토큰 삭제
+	deleteRefreshToken = async () => {
+		return await redisClient.del('refreshToken');
 	};
 }

@@ -5,7 +5,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwibmlja25hb
 
 { 
   "title": "크로와상 묶음",
-  "price": 10000,
+  "price": "10000",
   "content": "크로와상 싸게 팔아요."
 }
 
@@ -20,23 +20,21 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmlja25hbWUiOiLrk5zrlJTslrTshqHslrTtmowiLCJpYXQiOjE3MDE3MzQ3MTEsImV4cCI6MTcwMTc3NzkxMX0.rV1sYlqeJrkMonIC0X-8iGfdqnlx6WQ_EmgB9O_fz9Y
 
 
-
 #
 
 ### 상품 상세 보여주기
-GET http://localhost:3008/api/products/66 HTTP/1.1
+GET http://localhost:3008/api/products/3 HTTP/1.1
 Content-Type: application/json
 
 #
 
 ### 상품 수정하기
-
-PATCH  http://localhost:3008/api/products/66 HTTP/1.1
+PATCH  http://localhost:3008/api/products/3 HTTP/1.1
 Content-Type: application/json
 
 { 
   "title": "22오우예이 크리스마스 시즌한정 ",
-  "price":30000,
+  "price":"30000",
   "content": "고소한 견과류 향과 함께 즐기는 크로와상"
 }
 
@@ -45,7 +43,7 @@ Content-Type: application/json
 #
 
 ### 상품 삭제하기
-DELETE http://localhost:3008/api/products/66 HTTP/1.1
+DELETE http://localhost:3008/api/products/68 HTTP/1.1
 Content-Type: application/json
 
 
@@ -71,18 +69,6 @@ Content-Type: application/json
   "email":  "rere@naver.com",
   "password" : "123123"
 }
-
-
-
-# ### 카카오 회원 로그인__ 여기서 테스트 불가.
-# GET http://localhost:3008/api/auth/kakao/callback HTTP/1.1
-# Content-Type: application/json
-
-# {
-#   "email":  "allrkatk@naver.com",
-#   "password" : ""
-# }
-
 
 
 ###

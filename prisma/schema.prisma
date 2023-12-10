@@ -18,6 +18,7 @@ model Users {
   refreshToken   String?
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
+
   Carts          Carts?
   Comments       Comments?
   Comments_Likes Comments_Likes?
@@ -42,10 +43,13 @@ model Products {
   id             Int             @id @default(autoincrement())
   title          String
   content        String          @db.Text
-  price          Int
+  price          String
+  status         String          @default("FOR_SALE")
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
+
   user_id        Int
+
   Carts          Carts?
   Comments       Comments?
   Comments_Likes Comments_Likes?

@@ -22,14 +22,17 @@ export default () => {
 				try {
 					const email = profile._json.kakao_account.email;
 					const existUser = await prisma.users.findFirst({ where: { email } });
+
+					//해당하는 유저 있을경우 토큰 저장
 					if (existUser) {
-						// await prisma.users.update({ where: { id: existUser.id }, data: { refreshToken: refreshToken } });
 						await redisClient.set('refreshToken', refreshToken);
 						await redisClient.expire('refreshToken', 60 * 60 * 24);
 
 						existUser.accessToken = accessToken;
 						done(null, existUser);
-					} else {
+					}
+					//해당하는 유저 없을 경우
+					else {
 						const hashKakaoPassword = await bcrypt.hashSync(String(profile.id), 10);
 						const newUser = await prisma.users.create({
 							data: {
@@ -40,19 +43,13 @@ export default () => {
 								provider: 'kakao'
 							}
 						});
-						console.log('accessToken 위', accessToken);
-						// await prisma.users.update({ where: { id: newUser.id }, data: { refreshToken: refreshToken } });
 						await redisClient.set('refreshToken', refreshToken);
 						await redisClient.expire('refreshToken', 60 * 60 * 24);
 
 						newUser.accessToken = accessToken;
-						// (newUser.refreshToken = refreshToken);
 						done(null, newUser);
 					}
-					console.log('accessToken 아래', accessToken);
-					return (accessToken = accessToken);
 				} catch (err) {
-					console.error(err);
 					done(err);
 				}
 			}

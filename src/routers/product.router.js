@@ -8,7 +8,7 @@ import { ProductsRepository } from '../repositories/products.repository.js';
 
 import { authMiddleware } from '../middlewares/auth.js';
 import { newProductValidation } from '../middlewares/JoiValidation.js';
-
+import { queryStringValue, existProductId, permissionHave } from '../middlewares/otherValidation.js';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -23,16 +23,22 @@ const productsController = new ProductsController(productsService);
 router.post('/', authMiddleware, newProductValidation, productsController.createProduct);
 
 //상품 리스트 보여주기 기능
-router.get('/', productsController.getProductsList);
+router.get('/', queryStringValue, productsController.getProductsList);
 
 //상품 상세 보여주기 기능
-router.get('/:productId', productsController.getProductDetail);
+router.get('/:productId', existProductId, productsController.getProductDetail);
 
 //상품 수정하기 기능
-// router.patch('/:productId', authMiddleware, newProductValidation, productsController.updateProduct);
-router.patch('/:productId', newProductValidation, productsController.updateProduct);
+router.patch(
+	'/:productId',
+	authMiddleware,
+	existProductId,
+	permissionHave,
+	newProductValidation,
+	productsController.updateProduct
+);
 
 //상품 삭제하기 기능
-router.delete('/:productId', authMiddleware, productsController.deleteProduct);
+router.delete('/:productId', authMiddleware, existProductId, permissionHave, productsController.deleteProduct);
 
 export default router;

@@ -7,6 +7,17 @@
 </head>
 <body>
   <h1>당근이가 좋아요 마켓</h1>
+
+  <form action="/api/products" method="post">
+    <p>title</p>
+    <input type="text" name="title" placeholder="제목을 입력하세요" />
+    <p>price</p>
+    <input type="number" name="price" placeholder="가격을 입력하세요" />
+    <p>content</p>
+    <input type="text" name="content" placeholder="내용을 입력하세요" />
+
+    <button>상품 등록하기</button>
+  </form>
   <!-- <a href="/api/auth/"></a> -->
   <% data.forEach((product)=>{ %>
     <div style="border: 1px solid green; margin: 10px; padding: 10px;">

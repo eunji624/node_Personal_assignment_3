@@ -1,7 +1,5 @@
 import express from 'express';
-import axios from 'axios';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import passport from 'passport';
 import redis from 'redis';
 
@@ -16,19 +14,16 @@ import { UsersRepository } from '../repositories/users.repository.js';
 import { alreadyLogin, alreadyExist, alreadyLogout } from '../middlewares/auth.js';
 import { registerValidation, loginValidation } from '../middlewares/JoiValidation.js';
 const router = express.Router();
-const env = process.env;
 
 const usersRepository = new UsersRepository(prisma);
-const usersService = new UsersService(usersRepository, jwt, bcrypt); //많아지면 어떻게 처리하지?
-const usersController = new UsersController(usersService, env, axios, redisClient, passport);
+const usersService = new UsersService(usersRepository, bcrypt); //많아지면 어떻게 처리하지?
+const usersController = new UsersController(usersService);
 
 //회원가입 기능
 router.post('/register', registerValidation, alreadyExist, usersController.createUser);
 
-//로그인 화면 보여주기 (로컬로그인, 카카오로그인 테스트)
-router.get('/login', (req, res, next) => {
-	res.render('login', {});
-});
+//로그인 화면 보여주기 (로컬로그인, 카카오로그인 테스트용)
+router.get('/login', (req, res, next) => res.render('login'));
 
 //로그인 기능(pssport-local)
 router.post('/login', loginValidation, alreadyLogin, usersController.localLogin);
