@@ -50,7 +50,6 @@ export default () => {
 						done(null, false, { message: '회원가입을 해주세요.' });
 					}
 				} catch (err) {
-					console.error(err);
 					done(err);
 				}
 			}

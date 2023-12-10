@@ -24,20 +24,25 @@ export class UsersController {
 				failureRedirect: '/api/auth/login'
 			},
 			async (err, user, info) => {
-				if (err) {
-					throw new Error(err.message);
+				// if (err) {
+				// 	throw new Error(err.message);
+				// }
+				// if (!user) {
+				// 	throw new Error(info.message);
+				// 	//Error: 회원가입을 해주세요.
+				// 	//Error: 비밀번호가 일치하지 않습니다.
+				// }
+				try {
+					return req.login(user, (loginError) => {
+						if (loginError) {
+							return next(loginError);
+						}
+						res.cookie('accessToken', user.accessToken);
+						return res.status(200).json({ message: info.message });
+					});
+				} catch (err) {
+					next(err);
 				}
-				if (!user) {
-					throw new Error(info.message);
-				}
-
-				return req.login(user, (loginError) => {
-					if (loginError) {
-						return next(loginError);
-					}
-					res.cookie('accessToken', user.accessToken);
-					return res.status(200).json({ message: info.message });
-				});
 			}
 		)(req, res, next);
 	};

@@ -15,7 +15,7 @@ async function authMiddleware(req, res, next) {
 	try {
 		const redisGetToken = await redisClient.get('refreshToken');
 		if (!req.cookies.accessToken && !req.session.passport.user) {
-			throw new Error('로그인을 해주세요');
+			throw new Error('로그인을 해주세요.');
 		}
 
 		//카카오 로그인인 경우
