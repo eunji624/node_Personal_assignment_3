@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=
+  , initial-scale=1.0"
+		/>
+		<title>Document</title>
+	</head>
+	<body>
+		<form action="/api/auth/login" method="post">
+			<p>아이디</p>
+			<input type="email" name="email" placeholder="이메일을 입력하세요" />
+			<p>비밀번호</p>
+			<input type="password" name="password" placeholder="비밀번호를 입력하세요" />
+
+			<button>로그인</button>
+		</form>
+		<form action="/api/auth/kakao/callback" method="get">
+			<button>카카오 로그인</button>
+		</form>
+		<form action="/api/auth/unregister?_method=delete" method="POST">
+			<button>회원 탈퇴</button>
+		</form>
+		<form action="/api/auth/logout?_method=get" method="GET">
+			<button>로그 아웃</button>
+		</form>
+	</body>
+</html>

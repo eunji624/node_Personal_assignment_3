@@ -1,9 +1,9 @@
-const Joi = require('joi');
+import Joi from 'joi';
 
 //회원가입 유효성 검사
 const registerValidation = async (req, res, next) => {
 	const schema = Joi.object({
-		nick_name: Joi.string().min(2).max(30).required().messages({
+		nickname: Joi.string().min(2).max(30).required().messages({
 			'string.empty': '닉네임을 입력해 주세요.'
 		}),
 		email: Joi.string()
@@ -19,11 +19,11 @@ const registerValidation = async (req, res, next) => {
 		}),
 		passwordRe: Joi.any().valid(Joi.ref('password')).required().messages({
 			'any.only': '비밀번호가 일치하지 않습니다.'
-		}),
-		birth_date: Joi.date().allow('').iso().min('1-1-1920').max('1-1-2021').messages({
-			'date.format': '1920 ~ 2020 출생자만 입력이 가능합니다. (년-월-일 형식).'
-		}),
-		address: Joi.string().allow('')
+		})
+		// birth_date: Joi.date().allow('').iso().min('1-1-1920').max('1-1-2021').messages({
+		// 	'date.format': '1920 ~ 2020 출생자만 입력이 가능합니다. (년-월-일 형식).'
+		// }),
+		// address: Joi.string().allow('')
 	});
 	try {
 		await schema.validateAsync(req.body);
@@ -37,6 +37,7 @@ const registerValidation = async (req, res, next) => {
 
 //로그인 유효성 검사
 const loginValidation = async (req, res, next) => {
+	// console.log(req.body);
 	const schema = Joi.object({
 		email: Joi.string()
 			.email({
@@ -58,6 +59,7 @@ const loginValidation = async (req, res, next) => {
 		await schema.validateAsync(req.body);
 		next();
 	} catch (err) {
+		console.log('에러발생 조이');
 		const message = err.details[0].message;
 		res.status(400).json({ message });
 		next(err);
@@ -67,28 +69,31 @@ const loginValidation = async (req, res, next) => {
 //상품 작성 유효성 검사
 const newProductValidation = async (req, res, next) => {
 	const schema = Joi.object({
-		product_name: Joi.string().required().messages({
+		title: Joi.string().required().messages({
 			'string.empty': '상품명을 입력해 주세요.'
 		}),
-		price: Joi.number().required().messages({
-			'number.base': '가격을 입력해 주세요,'
+		price: Joi.number().required().positive().messages({
+			'any.required': '가격을 입력해 주세요,',
+			'number.positive': '가격은 음수가 될 수 없습니다.'
 		}),
-		comment: Joi.string().required().messages({
+		content: Joi.string().required().messages({
 			'string.empty': '내용을 입력해 주세요,'
-		}),
-		buy_date: Joi.date().allow('').iso().max('now').messages({
-			'date.format': '입력하신 날짜를 확인해 주세요. (년-월-일 형식).'
-		}),
-		status: Joi.string()
+		})
+		// buy_date: Joi.date().allow('').iso().max('now').messages({
+		// 	'date.format': '입력하신 날짜를 확인해 주세요. (년-월-일 형식).'
+		// }),
+		// status: Joi.string()
 	});
 	try {
+		console.log('벨리데이션 통과');
 		await schema.validateAsync(req.body);
 		next();
 	} catch (err) {
+		console.log(err);
 		const message = err.details[0].message;
 		res.status(400).json({ message });
 		next(err);
 	}
 };
 
-module.exports = { registerValidation, loginValidation, newProductValidation };
+export { registerValidation, loginValidation, newProductValidation };

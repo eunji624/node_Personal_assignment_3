@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>당근이가 좋아요 마켓</h1>
+  <!-- <a href="/api/auth/"></a> -->
+  <% data.forEach((product)=>{ %>
+    <div style="border: 1px solid green; margin: 10px; padding: 10px;">
+      <div>title: <%= product.title %></div>
+      <div>price: <%= product.price %></div>
+      <div>content: <%= product.content %></div>
+
+    </div>
+  <% }) %>
+</body>
+</html>

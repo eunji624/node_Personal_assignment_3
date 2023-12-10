@@ -1,0 +1,107 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id             Int             @id @default(autoincrement())
+  nickname       String
+  email          String
+  password       String
+  snsId          Int?
+  provider       String?
+  accessToken    String?
+  refreshToken   String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  Carts          Carts?
+  Comments       Comments?
+  Comments_Likes Comments_Likes?
+  Likes          Likes?
+  Products       Products[]
+  Relationships  Relationships?
+  UserInfos      UserInfos?
+}
+
+model UserInfos {
+  id        Int      @id @default(autoincrement())
+  user_id   Int      @unique
+  birth     DateTime
+  address   String
+  phone     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      Users    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model Products {
+  id             Int             @id @default(autoincrement())
+  title          String
+  content        String          @db.Text
+  price          Int
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  user_id        Int
+  Carts          Carts?
+  Comments       Comments?
+  Comments_Likes Comments_Likes?
+  Likes          Likes?
+  User           Users           @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id], map: "Products_user_id_fkey")
+}
+
+model Relationships {
+  user_id     Int      @unique
+  follower_id Int
+  followed_id Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  User        Users    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model Likes {
+  user_id     Int      @unique
+  products_id Int      @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  Product     Products @relation(fields: [products_id], references: [id], onDelete: Cascade)
+  User        Users    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model Carts {
+  id          Int      @id @default(autoincrement())
+  user_id     Int      @unique
+  products_id Int      @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  Product     Products @relation(fields: [products_id], references: [id], onDelete: Cascade)
+  User        Users    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model Comments {
+  id             Int             @id @default(autoincrement())
+  user_id        Int             @unique
+  products_id    Int             @unique
+  comments       String
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  Product        Products        @relation(fields: [products_id], references: [id], onDelete: Cascade)
+  User           Users           @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  Comments_Likes Comments_Likes?
+}
+
+model Comments_Likes {
+  user_id     Int      @unique
+  products_id Int      @unique
+  comments_id Int      @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  Comment     Comments @relation(fields: [comments_id], references: [id], onDelete: Cascade)
+  Product     Products @relation(fields: [products_id], references: [id], onDelete: Cascade)
+  User        Users    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
