@@ -35,7 +35,7 @@ app.use(express.static(`${__dirname}/public`));
 
 app.use(
 	session({
-		secret: '342dfsdsd',
+		secret: process.env.SESSION_SECRET_KEY,
 		resave: false,
 		saveUninitialized: false,
 		store: new FileStore(), //임시용. db에 저장하는게 더나음.
