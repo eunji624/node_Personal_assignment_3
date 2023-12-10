@@ -52,7 +52,7 @@ const ErrorHandler = (err, req, res, next) => {
 		default:
 			return res
 				.status(500)
-				.json({ success: false, erroerMessage: '연결에 실패하였습니다. 잠시후 다시 시도해 주세요.' });
+				.json({ success: false, erroerMessage: '연결에 실패하였습니다. 잠시후 다시 시도해 주세요.', err });
 	}
 };
 
