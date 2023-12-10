@@ -7,6 +7,7 @@ import fileStore from 'session-file-store';
 import methodOverride from 'method-override';
 import path from 'path';
 import redis from 'redis';
+import RedisStore from 'connect-redis';
 import flash from 'connect-flash';
 
 import router from './routers/index.js';
@@ -20,7 +21,11 @@ passportConfig();
 
 const FileStore = fileStore(session);
 const __dirname = path.resolve();
-const redisClient = redis.createClient();
+const redisClient = redis.createClient({
+	url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
+	password: process.env.REDIS_PASSWORD,
+	lagacyMode: true
+});
 
 redisClient.connect();
 
@@ -38,7 +43,8 @@ app.use(
 		secret: process.env.SESSION_SECRET_KEY,
 		resave: false,
 		saveUninitialized: false,
-		store: new FileStore(), //임시용. db에 저장하는게 더나음.
+		// store: new FileStore(), //임시용. db에 저장하는게 더나음.
+		store: new RedisStore({ client: redisClient }),
 		cookie: {
 			httpOnly: true,
 			secure: false
