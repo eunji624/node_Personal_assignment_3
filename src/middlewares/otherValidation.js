@@ -6,7 +6,11 @@ async function queryStringValue(req, res, next) {
 		const noQueryStr = queryString == {};
 		let queryValue;
 
-		noQueryStr ? (queryValue = 'desc') : (queryValue = queryString.sort.toLowerCase());
+		if (noQueryStr) {
+			queryValue = 'desc';
+		} else if (queryString) {
+			queryString.sort.toLowerCase();
+		}
 
 		if (!queryString.sort) {
 			throw new Error('올바른 주소값이 아닙니다.');
