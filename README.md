@@ -16,8 +16,6 @@
 ### 기술스텍
 
 <div>
-<img src="https://img.shields.io/badge/보일내용-배경색상?style=for-the-badge&logo=제공하는이름&logoColor=내용색상">
-
 <img src="https://img.shields.io/badge/javaScript-F7DF1E?style=for-the-badge&logo=javaScript&logoColor=black">
 
 <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white">
