@@ -3,18 +3,21 @@ import { prisma } from '../utils/prisma/index.js';
 async function queryStringValue(req, res, next) {
 	try {
 		const queryString = req.query;
-		const noQueryStr = queryString == {};
+		queryString;
+		console.log(queryString);
+
 		let queryValue;
-
-		if (noQueryStr) {
+		if (Object.keys(queryString).length === 0) {
 			queryValue = 'desc';
-		} else if (queryString) {
-			queryString.sort.toLowerCase();
-		}
-
-		if (!queryString.sort) {
+		} else if (!queryString.sort) {
 			throw new Error('올바른 주소값이 아닙니다.');
 		}
+
+		if (queryString.sort) {
+			console.log(queryString);
+			queryValue = queryString.sort.toLowerCase();
+		}
+
 		if (queryValue !== 'desc' && queryValue !== 'asc') {
 			throw new Error('올바른 주소값이 아닙니다.');
 		}
