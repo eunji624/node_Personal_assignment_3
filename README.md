@@ -5,14 +5,11 @@
 </br>
 </br>
 </br>
-</br>
-</br>
 
 ### 배포 주소
 
 > http://mallish.store/api/auth/login
 
-</br>
 </br>
 </br>
 
@@ -44,13 +41,11 @@
 
 </br>
 </br>
-</br>
 
 ### API 명세서 URL
 
 - https://docs.google.com/spreadsheets/d/1ujCVNFIhgsDy3UfyvX24Keni2-DMAPjIksdsO53khlA/edit#gid=0
 
-</br>
 </br>
 </br>
 
@@ -92,7 +87,6 @@
  ┗ 📜app.js
 ```
 
-</br>
 </br>
 </br>
 
